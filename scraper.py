@@ -183,6 +183,23 @@ def get_listing_last_updated_and_description(driver):
     listing_description = driver.find_element(By.XPATH, "//*[text()='Opis']/following-sibling::div").text
     return listing_last_updated, listing_description
 
+def deconstruct_adress(adress):
+    parts = adress.split(',')
+
+    listing_city = parts[-2]
+
+    try:
+        listing_district = parts[-3]
+    except Exception as e:
+        listing_district = "null"
+
+    try:
+        listing_street = parts[-5]
+    except Exception as e:
+        listing_street = "null"
+
+    return listing_city, listing_district, listing_street
+
 def scrape_listing(listing):
     print("Scraping " + listing)
 
@@ -202,11 +219,15 @@ def scrape_listing(listing):
 
     listing_last_updated, listing_description = get_listing_last_updated_and_description(driver)
 
+    listing_city, listing_district, listing_street = deconstruct_adress(listing_adress)
+
 
 
     print("Title: " + listing_title)
     print("Price: " + listing_price)
-    print("Adress: " + listing_adress)
+    print("City: " + listing_city)
+    print("District: " + listing_district)
+    print("Street: " + listing_street)
     print("ID: " + listing_id)
     print("Price for square-meter: " + listing_price_for_square_meter)
 
@@ -251,10 +272,10 @@ if __name__ == '__main__':
         driver.find_element(By.ID, 'onetrust-accept-btn-handler').click()
 
         listings = get_listings_from_li_tags(driver)
-        print(str(listings))
+        scrape_listing(listings[0])
 
-        with Pool(cpu_count()) as p:
-            p.map(scrape_listing, listings)
+        #with Pool(cpu_count()) as p:
+            #p.map(scrape_listing, listings)
 
     finally:
         driver.quit()
