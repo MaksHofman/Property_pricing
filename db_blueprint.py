@@ -27,18 +27,14 @@ def creating_db():
                 rent INTEGER,
                 ownership TEXT NOT NULL,
                 finish_condition TEXT NOT NULL,
-                balcony_garden_terrace TEXT NOT NULL,
-                parking_space TEXT NOT NULL,
                 heating TEXT NOT NULL,
-                amount_of_pictures INTEGER NOT NULL,
-                published_date DATE NOT NULL,
+                last_updated_date DATE NOT NULL,
                 description TEXT NOT NULL,
                 lift TEXT,
                 market_type TEXT,
                 advertiser_type TEXT,
                 available_from DATE,
                 year_of_construction INTEGER,
-                phone_number TEXT,
                 building_type TEXT,
                 windows TEXT,
                 media TEXT,
@@ -46,7 +42,8 @@ def creating_db():
                 equipment TEXT,
                 extra_info TEXT,
                 building_material TEXT,
-                owners_name TEXT
+                safety TEXT,
+                energy_certificate TEXT
             )
         ''')
         conn.commit()
